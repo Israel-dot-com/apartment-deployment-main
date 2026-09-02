@@ -1,0 +1,110 @@
+services:
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: apartment-postgres
+
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - backend
+
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./be-apartment
+      dockerfile: Dockerfile
+
+    env_file:
+      - ./be-apartment/.env
+
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - backend
+      - frontend
+
+    volumes:
+      - backend_media:/app/media
+      - backend_tmp:/app/tmp/media
+
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+    restart: unless-stopped
+
+
+  frontend:
+    build:
+      context: ./fe-apartment
+      dockerfile: Dockerfile
+
+    container_name: apartment-frontend
+
+    networks:
+      - frontend
+
+    depends_on:
+      backend:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+
+    container_name: apartment-nginx
+
+    ports:
+      - "80:80"
+
+    depends_on:
+      frontend:
+        condition: service_started
+      backend:
+        condition: service_healthy
+
+    networks:
+      - frontend
+      - backend
+
+    restart: unless-stopped
+ 
+
+volumes:
+  postgres_data:
+  backend_media:
+  backend_tmp:
+
+
+networks:
+  frontend:
+    driver: bridge
+
+  backend:
+    driver: bridge

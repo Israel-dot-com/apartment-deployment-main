@@ -1,6 +1,6 @@
 import { getAccessToken, refreshToken, clearAuth } from './auth';
 
-export const BASE_URL = "http://localhost:7001/api/v1";
+export const BASE_URL = "/api/v1";
 
 let isRefreshing = false;
 let failedQueue = [];

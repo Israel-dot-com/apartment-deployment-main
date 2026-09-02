@@ -1,0 +1,17 @@
+# ──────────────────────────────────────────────
+# Required — update these values
+# ──────────────────────────────────────────────
+
+aws_region    = "us-east-1"
+key_pair_name = "your-key-pair-name"
+
+# ──────────────────────────────────────────────
+# Optional — customise as needed
+# ──────────────────────────────────────────────
+
+# environment      = "prod"
+# project_name     = "apartment"
+# instance_type    = "t3.small"
+# ssh_allowed_cidr = "YOUR_IP/32"        # e.g. "203.0.113.50/32"
+# app_repo_url     = "https://github.com/youruser/apartment-deployment.git"
+# domain_name      = "yourdomain.com"    # leave empty to skip HTTPS/ACM
