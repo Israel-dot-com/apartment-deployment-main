@@ -12,7 +12,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN mkdir -p /app/media /app/tmp/media
+RUN mkdir -p /app/media /app/tmp/media /app/logs
+
+
 
 EXPOSE 8000
 
