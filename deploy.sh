@@ -18,6 +18,7 @@ chmod +x deploy.sh
 
 # Pull the latest code
 echo "--> Pulling latest code from main branch..."
+# Using git pull directly assumes origin is set up and auth is not an issue
 git fetch origin main
 git checkout main
 git reset --hard origin/main

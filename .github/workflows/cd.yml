@@ -12,6 +12,7 @@ permissions:
 jobs:
   deploy:
     name: Deploy to EC2
+    needs: [] # We can add build-and-test here if we want CD to wait for CI
     runs-on: ubuntu-latest
     
     steps:
@@ -50,6 +51,7 @@ jobs:
         echo "SSM Command ID: $COMMAND_ID"
         
         # Wait for the command to finish
+        # aws ssm wait command-executed fails if the command fails, which is what we want
         echo "Waiting for command to complete..."
         aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID"
         
