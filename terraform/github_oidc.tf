@@ -1,4 +1,4 @@
-# ──────────────────────────────────────────────
+#check ──────────────────────────────────────────────
 # GitHub OIDC Identity Provider
 # ──────────────────────────────────────────────
 
@@ -32,7 +32,6 @@ resource "aws_iam_role" "github_actions" {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
           }
           StringLike = {
-            # Replace with the actual GitHub username/repo
             "token.actions.githubusercontent.com:sub" = "repo:israel-dot-com/apartment-deployment-main:*"
           }
         }
