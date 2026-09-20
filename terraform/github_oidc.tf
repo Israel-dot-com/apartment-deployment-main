@@ -66,14 +66,23 @@ resource "aws_iam_role_policy" "github_actions_ssm" {
           "ssm:SendCommand"
         ]
         Resource = [
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:instance/*",
-          "arn:aws:ssm:${var.aws_region}:*:document/AWS-RunShellScript"
+          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:instance/*"
         ]
         Condition = {
           StringEquals = {
             "ssm:ResourceTag/Name" = "${var.project_name}-server"
           }
         }
+      },
+      {
+        # Allow access to the SSM document
+        Effect = "Allow"
+        Action = [
+          "ssm:SendCommand"
+        ]
+        Resource = [
+          "arn:aws:ssm:${var.aws_region}::document/AWS-RunShellScript"
+        ]
       },
       {
         # Allow checking the status of the command
