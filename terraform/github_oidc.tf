@@ -33,7 +33,7 @@ resource "aws_iam_role" "github_actions" {
           }
           StringLike = {
             # Replace with the actual GitHub username/repo
-            "token.actions.githubusercontent.com:sub" = "repo:aregbesolaisrael/apartment-deployment:*"
+            "token.actions.githubusercontent.com:sub" = "repo:israel-dot-com/apartment-deployment-main:*"
           }
         }
       }
