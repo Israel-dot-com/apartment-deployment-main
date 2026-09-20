@@ -215,15 +215,15 @@ async def exception(request: Request, exc: Exception):
         f"[ERROR] - An error occured | {exc}, {exc_type} {exc_obj} {exc_tb.tb_lineno}"
     )
 
-    return JSONResponse(
-        status_code=500,
-        content={
-            "status": False,
-            "status_code": 500,
-            "message": f"An unexpected error occurred: {exc}",
-        },
-    )
+#     return JSONResponse(
+#         status_code=500,
+#         content={
+#             "status": False,
+#             "status_code": 500,
+#             "message": f"An unexpected error occurred: {exc}",
+#         },
+#     )
 
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", port=7001, reload=True, workers=4, reload_excludes=["logs"])
+# if __name__ == "__main__":
+#     uvicorn.run("main:app", port=7001, reload=True, workers=4, reload_excludes=["logs"])
