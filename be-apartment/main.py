@@ -113,6 +113,9 @@ async def log_requests(request: Request, call_next):
     return response
 
 
+from prometheus_fastapi_instrumentator import Instrumentator
+Instrumentator().instrument(app).expose(app)
+
 app.include_router(api_version_one)
 
 

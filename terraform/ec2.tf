@@ -81,3 +81,9 @@ resource "aws_ec2_instance_connect_endpoint" "main" {
 
   tags = { Name = "${var.project_name}-eice" }
 }
+
+# Attach CloudWatch policy for logs and metrics
+resource "aws_iam_role_policy_attachment" "cloudwatch" {
+  role       = aws_iam_role.ec2.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
