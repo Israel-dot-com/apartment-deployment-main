@@ -101,3 +101,4 @@ output "github_actions_role_arn" {
   description = "Add this ARN as a repository secret in GitHub named AWS_OIDC_ROLE_ARN"
   value       = aws_iam_role.github_actions.arn
 }
+
